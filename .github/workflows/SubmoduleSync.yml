@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with: 
+          repository: old-winter-sun/wsBlogSource
+          ssh-key: ${{ secrets.MATHNOTE_DEPLOY_PRI }}
+
+      - name: Init git
+        run: |
+          git config user.email "none"
+          git config user.name "Submodule Sync Bot"
+
+      - name: Submodule update
+        run: |
+          git submodule update --init --recursive
+          git submodule update --recursive --remote
+
+      - name: Commit to parent repo
+        run: |
+          git add --all
+          git commit -m "Sync MathNote Submodule"
+          git push
