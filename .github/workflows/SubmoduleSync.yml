@@ -22,8 +22,8 @@ jobs:
 
       - name: Submodule update
         run: |
-          git submodule update --init --recursive
-          git submodule update --recursive --remote
+          git submodule update --init --recursive source/_posts/MathNote/
+          git submodule update --recursive --remote source/_posts/MathNote/
 
       - name: Commit to parent repo
         run: |
